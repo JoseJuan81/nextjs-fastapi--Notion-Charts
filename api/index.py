@@ -1,8 +1,13 @@
+import os
+import requests
+
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
-import requests
 from requests.structures import CaseInsensitiveDict
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -14,8 +19,8 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-notion_database_id = "aff752bb81c34eb3a71e85f3ae9d124e"
-notion_api_key = "secret_guypOW1Pk7tZr9FJxZL5Bz2IR9HEtT9GsgCuRH28hWG"
+notion_database_id = os.getenv("NOTION_DATABASE_ID")
+notion_api_key = os.getenv("NOTION_API_KEY")
 
 @app.get("/api/tasks")
 def tasks_items_from_notion_database():
